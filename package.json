@@ -4,7 +4,7 @@
   "description": "node.js lib for the StickNFind",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jshint *.js"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,12 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sandeepmistry/node-sticknfind/issues"
+  },
+  "dependencies": {
+    "noble": "~0.2.1"
+  },
+  "devDependencies": {
+    "jshint": "~2.1.11",
+    "async": "~0.2.9"
   }
 }
