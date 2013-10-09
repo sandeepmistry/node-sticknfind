@@ -94,6 +94,29 @@ StickNFind.discover(function(sticknfind) {
       });
     },
     function(callback) {
+      console.log('readLinkLossAlertLevel');
+      sticknfind.readLinkLossAlertLevel(function(alertLevel) {
+        console.log('link lose alert level = ' + alertLevel);
+
+        callback();
+      });
+    },
+    function(callback) {
+      console.log('writeLinkLossAlertLevel');
+      sticknfind.writeLinkLossAlertLevel('mild', function(alertLevel) {
+        callback();
+      });
+    },
+    function(callback) {
+      setTimeout(callback, 1000);
+    },
+    function(callback) {
+      console.log('writeLinkLossAlertLevel');
+      sticknfind.writeLinkLossAlertLevel('none', function(alertLevel) {
+        callback();
+      });
+    },
+    function(callback) {
       console.log('readTxPowerLevel');
       sticknfind.readTxPowerLevel(function(txPowerLevel) {
         console.log('TX power level = ' + txPowerLevel);

@@ -141,8 +141,8 @@ StickNFind.prototype.readSoftwareRevision = function(callback) {
   this.readStringCharacteristic(DEVICE_INFORMATION_SERVICE_UUID, SOFTWARE_REVISION_CHARACTERISTIC_UUID, callback);
 };
 
-StickNFind.prototype.readAlertLevel = function(callback) {
-  this.readCharacteristic(ALERT_LEVEL_SERVICE_UUID, ALERT_LEVEL_CHARACTERISTIC_UUID, function(data) {
+StickNFind.prototype.readAlertLevelFromService = function(serviceUuid, callback) {
+  this.readCharacteristic(serviceUuid, ALERT_LEVEL_CHARACTERISTIC_UUID, function(data) {
     var alertLevel = 'unknown';
 
     if (data[0] === 0x00) {
@@ -157,7 +157,7 @@ StickNFind.prototype.readAlertLevel = function(callback) {
   });
 };
 
-StickNFind.prototype.writeAlertLevel = function(alertLevel, callback) {
+StickNFind.prototype.writeAlertLevelToService = function(serviceUuid, alertLevel, callback) {
   var level = 0;
 
   if (alertLevel === 'mild') {
@@ -166,9 +166,25 @@ StickNFind.prototype.writeAlertLevel = function(alertLevel, callback) {
     level = 0x02;
   }
 
-  this.writeCharacteristic(ALERT_LEVEL_SERVICE_UUID, ALERT_LEVEL_CHARACTERISTIC_UUID, new Buffer([level]), function() {
+  this.writeCharacteristic(serviceUuid, ALERT_LEVEL_CHARACTERISTIC_UUID, new Buffer([level]), function() {
     callback();
   });
+};
+
+StickNFind.prototype.readAlertLevel = function(callback) {
+  this.readAlertLevelFromService(ALERT_LEVEL_SERVICE_UUID, callback);
+};
+
+StickNFind.prototype.writeAlertLevel = function(alertLevel, callback) {
+  this.writeAlertLevelToService(ALERT_LEVEL_SERVICE_UUID, alertLevel, callback);
+};
+
+StickNFind.prototype.readLinkLossAlertLevel = function(callback) {
+  this.readAlertLevelFromService(LINK_LOSS_SERVICE_UUID, callback);
+};
+
+StickNFind.prototype.writeLinkLossAlertLevel = function(alertLevel, callback) {
+  this.writeAlertLevelToService(LINK_LOSS_SERVICE_UUID, alertLevel, callback);
 };
 
 StickNFind.prototype.readTxPowerLevel = function(callback) {
